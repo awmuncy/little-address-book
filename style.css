@@ -1,0 +1,143 @@
+* {
+	box-sizing: border-box;
+}
+html {
+	font-family: sans-serif;
+}
+body {
+	display: grid;
+	align-items: start;
+	margin: 0px;
+	min-height: 100vh;
+	padding-top: 20px;
+	grid-template-rows: min-content 1fr min-content;
+	box-sizing: border-box;
+}
+
+header {
+	text-align: center;
+	font-family: Bookman Old Style; 
+	color: #333;
+}
+
+main {
+	width: 100%;
+	max-width: 780px;
+	margin: 0 auto;
+	border: 1px solid #ccc;	
+	border-radius: 8px;
+	overflow: hidden;
+}
+footer {
+	background-color: #333;
+	color: white;
+	padding: 10px;
+	text-align: center;
+}
+footer a {
+	color: white;
+}
+
+
+.edit, button.submit-contact {
+    display: grid;
+    place-content: center;
+    margin: 10px;
+    padding: .1em .6em;
+    font-family: sans-serif;
+    line-height: 1.4;
+    color: #242729;    
+    background-color: #e1e3e5;
+    border: 1px solid #adb3b9;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 rgba(12,13,14,0.2), 0 0 0 2px #FFF inset;
+    white-space: nowrap;
+    cursor: pointer;
+    place-self: center stretch;
+	color: white;
+	background-color: rgb(0, 44, 92);
+	grid-column: span 2;
+    margin: 10px;
+    padding: 5px;
+}
+button.edit {
+	grid-column: span 1;
+	background-color: #e1e3e5;
+	color: #242729;
+	text-shadow: 0 1px 0 #FFF;
+}
+.edit:hover, button:hover {
+	background-color: #eee;
+}
+button.submit-contact:hover {
+	background-color: rgb(0, 30,80);
+}
+
+
+.delete {
+	background: transparent;
+	border: 0px;
+	cursor: pointer;
+	text-align: center;
+	min-height: 48px;
+	min-width: 48px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 5px;
+	grid-column: span 1;
+}
+.delete:after {
+	font-family: sans-serif;
+	content: "X";
+	color: red;
+	font-weight: 800;
+}
+.delete:hover {
+	background-color: #f6f6f6;
+}
+
+
+
+/* Contact listing */
+
+.contacts-list {
+	list-style-type: none;
+	padding: 0px;
+	width: 100%;
+	margin: 0px;
+}
+.contact {
+	place-content: center;
+	place-items: center stretch;
+	border-bottom: 1px solid #ccc;
+	justify-content: space-between;
+	display: grid;
+	grid-template-columns: calc(25% - 50px) 20% 30% 25% 50px;
+	max-width: 100%;
+	justify-content: center;
+	width: 100%;
+}
+.first-name, .last-name, .email {
+	margin: 5px;
+	width: calc(100% - 10px);
+	padding: 5px 10px;
+	overflow: hidden;
+}
+.contact:hover {
+	background-color: #fcfcfc;
+}
+form {
+	display: grid;
+	align-items: center;
+	grid-template-columns: calc(25% - 50px) 20% 30% 25% 50px;
+	width: 100%;
+}
+input {
+	border: 0px;
+	padding: 5px;
+	color: #555;
+	font-size: 16px;
+	display: block;
+	width: 100%;
+}
