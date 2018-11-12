@@ -7,8 +7,8 @@
 </head>
 <body>
 	<header>
-		<h1>My Little Address Book</h1>
-
+		<h1>My Little Address Book!</h1>
+		<img src="logo.png" />
 	</header>
 	<main>
 
@@ -29,5 +29,37 @@
 
 	
 	<script src="app.js"></script>
+	<script src="service-worker.js"></script>
+	<script>
+		window.isUpdateAvailable = new Promise(function(resolve, reject) {
+			navigator.serviceWorker.register('service-worker.js')
+				.then(reg => {
+					reg.onupdatefound = () => {
+						const installingWorker = reg.installing;
+						installingWorker.onstatechange = () => {
+							switch (installingWorker.state) {
+								case 'installed':
+									if (navigator.serviceWorker.controller) {
+										// new update available
+										resolve(true);
+									} else {
+										// no update available
+										resolve(false);
+									}
+									break;
+							}
+						};
+					};
+				})
+				.catch(err => console.error('[SW ERROR]', err));
+			
+		});
+		window['isUpdateAvailable']
+		.then(isAvailable => {
+			if (isAvailable) {
+				alert("A new version of this app is available.");
+			}
+		});
+	</script>
 </body>
 </html>
