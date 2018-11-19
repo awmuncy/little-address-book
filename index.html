@@ -7,8 +7,7 @@
 </head>
 <body>
 	<header>
-		<h1>My Little Address Book!</h1>
-		<img src="logo.png" />
+		<h1>My Little Address Book</h1>
 	</header>
 	<main>
 
@@ -57,7 +56,10 @@
 		window['isUpdateAvailable']
 		.then(isAvailable => {
 			if (isAvailable) {
-				alert("A new version of this app is available.");
+				if(confirm("A new version of the app is available. Refresh?")) {
+					navigator.serviceWorker.controller.postMessage({action: "skipWaiting"});
+					location.reload();
+				}
 			}
 		});
 	</script>

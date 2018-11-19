@@ -1,50 +1,46 @@
-// Version 0.2.1
+// Version 0.2.3
 
 var cacheName = "little-address-book";
 var filesToCache = [
 	"/",
 	"index.html",
 	"style.css",
-	"app.js",
-	"logo.png"
+	"app.js"
 ];
 
 
-// All the resources are transient. Let's cache them.
-self.addEventListener('install', function(e){
-	console.log('[ServiceWorker] Install');
+self.addEventListener('message', function(event){	
+	console.log(event.data);
+});
 
+self.addEventListener('install', function(e){
 	e.waitUntil(
 		caches.open(cacheName).then(function(cache){
 			console.log('[ServiceWorker] Install');
 			return cache.addAll(filesToCache);
 		})
 	);
+	e.waitUntil(self.skipWaiting());
 });
 
 
-
-
-// This what happens when the newest version of the app activates. Obviously.
-self.addEventListener('activate', event => {
-	event.waitUntil(self.clients.claim());	
+self.addEventListener('activate', function(event) {
+	event.waitUntil(self.clients.claim());
+	console.log("Claimed");
 });
 
 
+self.addEventListener('fetch', function(event) {
 
-// Looking for a resource? Let's check the store first.
-self.addEventListener('fetch', event => {
 	event.respondWith(
-		caches.match(event.request, {ignoreSearch:true}).then(response => {
-			return response || fetch(event.request);
+		caches.open(cacheName).then(function(cache) {
+			return cache.match(event.request, {ignoreSearch:true}).then(function (response) {
+				return response || fetch(event.request).then(function(response) {
+					navigator.serviceWorker.controller.postMessage({action: response});
+					cache.put(event.request, response.clone());
+					return response;
+				});
+			});
 		})
 	);
-});
-
-self.addEventListener('message', function(event){
-	console.log(event.data.action);
-	if(event.data.action == 'skipWaiting') {
-		console.log("Should skip?");
-		self.skipWaiting();
-	}
 });
