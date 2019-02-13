@@ -30,13 +30,13 @@ self.addEventListener('activate', function(event) {
 });
 
 
-self.addEventListener('fetch', function(event) {
 
+self.addEventListener('fetch', function(event) {
 	event.respondWith(
 		caches.open(cacheName).then(function(cache) {
 			return cache.match(event.request, {ignoreSearch:true}).then(function (response) {
 				return response || fetch(event.request).then(function(response) {
-					navigator.serviceWorker.controller.postMessage({action: response});
+					// navigator.serviceWorker.controller.postMessage({action: response});
 					cache.put(event.request, response.clone());
 					return response;
 				});
